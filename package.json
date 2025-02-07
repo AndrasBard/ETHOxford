@@ -1,0 +1,22 @@
+{
+  "name": "ethoxford",
+  "version": "1.0.0",
+  "description": "Team members: - Andras Bard - Rushil Mathur - Freddie Weir",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrasBard/ETHOxford.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrasBard/ETHOxford/issues"
+  },
+  "homepage": "https://github.com/AndrasBard/ETHOxford#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
