@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/AndrasBard/ETHOxford#readme",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "mina": "^1.0.9",
+    "snarkyjs": "^0.12.1"
   }
 }
