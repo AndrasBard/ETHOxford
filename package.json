@@ -21,6 +21,7 @@
     "@o1labs/client-sdk": "^1.0.1",
     "express": "^4.21.2",
     "graphql-request": "^7.1.2",
-    "mina": "^1.0.9"
+    "mina": "^1.0.9",
+    "mina-signer": "^3.0.7"
   }
 }
