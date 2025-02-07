@@ -1,5 +1,7 @@
 # ETH Oxford Hackathon Project
 
+Team name: `JohnsHack`
+
 Team members:
 - Andras Bard
 - Rushil Mathur
