@@ -1,78 +1,39 @@
-const express = require('express');
+const express = require("express");
+const { request, gql } = require("graphql-request");
+
 const app = express();
+const port = 3000;
 
-app.use(express.static(__dirname + '/public'))
+// Mina GraphQL API endpoint (Berkeley Testnet)
+const MINA_NETWORK = "https://proxy.berkeley.minaexplorer.com/graphql";
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+app.use(express.json());
 
-app.listen(3000, () => {
-    console.log('Server started');
-});
-
-import { Mina, PrivateKey, AccountUpdate, ZkProgram } from "snarkyjs";
-
-// Initialize SnarkyJS
-await Mina.setActiveInstance(Mina.LocalBlockchain());
-
-// Define a simple zero-knowledge program for proof generation
-const PaperProof = ZkProgram({
-  name: "PaperProof",
-  publicInput: String,
-  methods: {
-    verifyPaper: {
-      privateInputs: [String],
-      async method(input, content) {
-        // Simple equality check (replace with real ZKP logic)
-        if (input !== content) throw new Error("Proof validation failed");
-      },
-    },
-  },
-});
-
-await PaperProof.compile();
-
-// Define a class for research papers
-class Paper {
-  constructor(title, author, content, references, date) {
-    this.title = title;
-    this.author = author;
-    this.content = content;
-    this.references = references;
-    this.date = date;
+// GraphQL query to get account balance
+const GET_ACCOUNT_BALANCE = gql`
+  query ($publicKey: String!) {
+    account(publicKey: $publicKey) {
+      balance { total }
+    }
   }
+`;
 
-  async submitPaper() {
-    // Generate a zero-knowledge proof
-    const proof = await PaperProof.verifyPaper(this.content, this.content);
+// Get account balance
+app.get("/balance/:address", async (req, res) => {
+    try {
+        const address = req.params.address;
+        const data = await request(MINA_NETWORK, GET_ACCOUNT_BALANCE, { publicKey: address });
 
-    // Create a transaction to deploy the paper to Mina
-    const feePayerKey = PrivateKey.random();
-    const tx = await Mina.transaction(feePayerKey, async () => {
-      let update = AccountUpdate.createSigned(feePayerKey);
-      update.body.memo = `Paper: ${this.title} by ${this.author}`;
-    });
+        if (!data.account) {
+            return res.status(404).json({ error: "Account not found" });
+        }
 
-    await tx.prove();
-    await tx.send();
+        res.json({ balance: data.account.balance.total });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
 
-    return tx.toPretty();
-  }
-}
-
-// Example usage
-async function main() {
-  const paper = new Paper(
-    "Decentralized Innovation in Research",
-    "John Doe",
-    "This paper explores the potential of blockchain in research...",
-    ["Ref1", "Ref2", "Ref3"],
-    new Date().toISOString()
-  );
-
-  const result = await paper.submitPaper();
-  console.log(`Paper deployed successfully: ${result}`);
-}
-
-main().catch(console.error);
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});

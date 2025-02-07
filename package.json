@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Team members: - Andras Bard - Rushil Mathur - Freddie Weir",
   "main": "server.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,8 +18,9 @@
   },
   "homepage": "https://github.com/AndrasBard/ETHOxford#readme",
   "dependencies": {
+    "@o1labs/client-sdk": "^1.0.1",
     "express": "^4.21.2",
-    "mina": "^1.0.9",
-    "snarkyjs": "^0.12.1"
+    "graphql-request": "^7.1.2",
+    "mina": "^1.0.9"
   }
 }
