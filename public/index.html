@@ -11,6 +11,9 @@
         <main>
             <header>
                 <h1>Peer<span>Proof</span></h1>
+                <div class="button">Upload & Sign</div>
+                <div class="button">Download & Validate</div>
+                <div class="button">Connect wallet</div>
             </header>
             <article>
                 <iframe src="article.pdf"></iframe>
@@ -32,13 +35,20 @@
                     numbers, ensuring confidential communication between two parties.</p>
             </aside>
             <dialog>
+                <p>Up dialog</p>
+            </dialog>
+            <dialog>
+                <p>Down dialog</p>
+            </dialog>
+            <dialog>
                 <form method="dialog">
-                    <label for="key">Key:</label>
-                    <input id="key" name="key" type="text" />
+                    <label for="publicKey">Public key: <input id="publicKey" name="publicKey" type="text" /></label>
+                    <label for="privateKey">Private key: <input id="privateKey" name="privateKey" type="text" /></label>
                     <input type="submit" />
                 </form>
             </dialog>
         </main>
+        <script src="api.js"></script>
         <script src="client.js"></script>
     </body>
 </html>
