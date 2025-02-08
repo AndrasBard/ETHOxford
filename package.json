@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "mytest": "node tester.js"
+    "mytest": "node tester.js",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,14 @@
     "axios": "^1.7.9",
     "express": "^4.21.2",
     "graphql-request": "^7.1.2",
+    "level": "^9.0.0",
     "mina": "^1.0.9",
     "mina-signer": "^3.0.7",
     "o1js": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   }
 }
