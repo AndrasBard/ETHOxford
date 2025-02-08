@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mytest": "node tester.js"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,11 @@
   "homepage": "https://github.com/AndrasBard/ETHOxford#readme",
   "dependencies": {
     "@o1labs/client-sdk": "^1.0.1",
+    "axios": "^1.7.9",
     "express": "^4.21.2",
     "graphql-request": "^7.1.2",
     "mina": "^1.0.9",
-    "mina-signer": "^3.0.7"
+    "mina-signer": "^3.0.7",
+    "o1js": "^2.2.0"
   }
 }

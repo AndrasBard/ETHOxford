@@ -1,41 +1,26 @@
 const express = require("express");
-const { request, gql } = require("graphql-request");
-const MinaSigner = require("mina-signer").default;
+const { PrivateKey, PublicKey, Signature, Field } = require("o1js");
+
 
 const app = express();
 const port = 3000;
-const signer = MinaSigner;
 
-const MINA_NETWORK = "https://proxy.berkeley.minaexplorer.com/graphql";
-
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public"))
+app.use(express.json());
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
-
-
 // Store signed papers (for demonstration purposes, should be decentralized storage in production)
 const papers = {};
 
-// GraphQL query to get account balance
-const GET_ACCOUNT_BALANCE = gql`
-  query ($publicKey: String!) {
-    account(publicKey: $publicKey) {
-      balance { total }
-    }
-  }
-`;
-
-// Get account balance
+// Get account balance (placeholder, as o1js does not directly handle network requests)
 app.get("/balance/:address", async (req, res) => {
     try {
         const address = req.params.address;
-        const data = await request(MINA_NETWORK, GET_ACCOUNT_BALANCE, { publicKey: address });
-        if (!data.account) {
-            return res.status(404).json({ error: "Account not found" });
-        }
-        res.json({ balance: data.account.balance.total });
+        // In a real application, you would query the Mina network for the balance
+        // This is a placeholder response
+        res.json({ balance: "1000" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -45,12 +30,23 @@ app.get("/balance/:address", async (req, res) => {
 app.post("/submit-paper", (req, res) => {
     try {
         const { title, hash, authorPrivateKey } = req.body;
-        const authorPublicKey = signer.getPublicKey(authorPrivateKey);
-        const signature = signer.sign(JSON.stringify({ title, hash }), authorPrivateKey);
+
+        // Convert private key to a PrivateKey object
+        const privateKey = PrivateKey.fromBase58(authorPrivateKey);
+
+        // Derive the public key
+        const authorPublicKey = privateKey.toPublicKey();
+
+        // Create a message to sign (combine title and hash)
+        const message = Field.fromJSON([title, hash]);
+
+        // Sign the message
+        const signature = Signature.create(privateKey, [message]);
         
-        papers[hash] = { title, authorPublicKey, signature };
+        // Store the paper metadata
+        papers[hash] = { title, authorPublicKey: authorPublicKey.toBase58(), signature: signature.toBase58() };
         
-        res.json({ message: "Paper submitted!", signature });
+        res.json({ message: "Paper submitted!", signature: signature.toBase58() });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -60,7 +56,18 @@ app.post("/submit-paper", (req, res) => {
 app.post("/verify-paper", (req, res) => {
     try {
         const { title, hash, authorPublicKey, signature } = req.body;
-        const isValid = signer.verify(signature, JSON.stringify({ title, hash }), authorPublicKey);
+        
+        // Convert public key and signature to their respective objects
+        const publicKey = PublicKey.fromBase58(authorPublicKey);
+        const sig = Signature.fromBase58(signature);
+        
+        console.log(sig)
+        // Create the message to verify
+        const message = Field.fromJSON([title, hash]);
+        
+        // Verify the signature
+        const isValid = sig.verify(publicKey, [message]);
+
         res.json({ isValid });
     } catch (error) {
         res.status(500).json({ error: error.message });
