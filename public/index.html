@@ -35,12 +35,21 @@
                     numbers, ensuring confidential communication between two parties.</p>
             </aside>
             <dialog>
-                <p>Up dialog</p>
+                <h2>Upload & Sign</h2>
+                <form method="dialog">
+                    <label for="pdf">PDF: <input id="pdf" name="pdf" type="file" accept=".pdf" /></label>
+                    <input type="submit" />
+                </form>
             </dialog>
             <dialog>
-                <p>Down dialog</p>
+                <h2>Download & Validate</h2>
+                <form method="dialog">
+                    <label for="paperTitle">Paper title: <input id="paperTitle" name="paperTitle" type="text" /></label>
+                    <input type="submit" />
+                </form>
             </dialog>
             <dialog>
+                <h2>Connect wallet</h2>
                 <form method="dialog">
                     <label for="publicKey">Public key: <input id="publicKey" name="publicKey" type="text" /></label>
                     <label for="privateKey">Private key: <input id="privateKey" name="privateKey" type="text" /></label>
