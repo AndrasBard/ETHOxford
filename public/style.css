@@ -3,7 +3,7 @@ body {
     padding: 0;
     font-family: 'Roboto Flex', sans-serif;
     box-sizing: border-box;
-    background-color: lavender;
+    background-color: mintcream;
 }
 
 main {
@@ -17,7 +17,7 @@ main {
 
 header, article, aside {
     border: 3px solid black;
-    box-shadow: 0.4rem 0.4rem 0 0 rebeccapurple;
+    box-shadow: 0.4rem 0.4rem 0 0 darkgreen;
     background-color: white;
     overflow: hidden;
     margin: 1rem;
@@ -56,4 +56,13 @@ h1, h2, h3 {
 
 aside p {
     margin-left: 1rem;
+}
+
+h1 span {
+    color: darkgreen;
+    font-stretch: 30%;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
 }
