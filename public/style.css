@@ -3,6 +3,7 @@ body {
     padding: 0;
     font-family: 'Roboto Flex', sans-serif;
     box-sizing: border-box;
+    background-color: lavender;
 }
 
 main {
@@ -14,13 +15,22 @@ main {
     gap: 0;
 }
 
-header, article, aside, footer {
-    border: 1px solid red;
+header, article, aside {
+    border: 3px solid black;
+    box-shadow: 0.4rem 0.4rem 0 0 rebeccapurple;
+    background-color: white;
+    overflow: hidden;
     margin: 1rem;
+}
+
+header, aside {
+    padding: 1rem;
 }
 
 header {
     margin-bottom: 0;
+    display: flex;
+    align-items: center;
 }
 
 aside {
@@ -32,11 +42,18 @@ header, footer {
 }
 
 iframe {
+    margin: 0;
+    padding: 0;
+    border: 0;
     width: 100%;
     height: 100%;
 }
 
-h1 {
-    font-family: 'Roboto Flex';
-    font-stretch: expanded !important;
+h1, h2, h3 {
+    font-stretch: 150%;
+    font-weight: normal;
+}
+
+aside p {
+    margin-left: 1rem;
 }
