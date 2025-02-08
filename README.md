@@ -7,6 +7,10 @@ Team members:
 - Rushil Mathur
 - Freddie Weir
 
+## Details
+
+See BUIDL project details.
+
 ## Running
 
 Install dependencies: `npm install`
